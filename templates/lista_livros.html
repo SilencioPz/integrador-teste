@@ -1,0 +1,54 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lista de Livros</title>
+</head>
+
+<body>
+    <h2>Livros Cadastrados</h2>
+    {% if livros %}
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>ISBN</th>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editora</th>
+            <th>Ano de Publicação</th>
+            <th>Categoria</th>
+            <th>Quantidade</th>
+            <th>Preço</th>
+            <th>Palavrinha</th>
+            <th>Imagem</th>
+        </tr>
+        {% for livro in livros %}
+        <tr>
+            <td>{{ livro.id }}</td>
+            <td>{{ livro.ISBN }}</td>
+            <td>{{ livro.titulo }}</td>
+            <td>{{ livro.autor }}</td>
+            <td>{{ livro.editora }}</td>
+            <td>{{ livro.ano_publicacao }}</td>
+            <td>{{ livro.categoria }}</td>
+            <td>{{ livro.quantidade }}</td>
+            <td>{{ livro.preco }}</td>
+            <td>{{ livro.palavrinha }}</td>
+            
+            <td><a href="{{ url_for('imagem', filename=livro.imagem) }}" target="_blank">Ver Imagem</a></td>
+
+        
+        </tr>
+        {% endfor %}
+    </table>
+    {% else %}
+    <p>Nenhum livro cadastrado.</p>
+    {% endif %}
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/query.js') }}" defer></script>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,51 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultados da Pesquisa</title>
+    <style>
+        .center {
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 25%;
+            height: auto;
+        }
+        @media screen and (max-width: 600px) {
+            .center {
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <img src="{{ url_for('static', filename='logo-quie-isso-att-3.png') }}" alt="Logo" class="center">
+    </div>
+
+    <h1>Resultados da Pesquisa</h1>
+
+    {% for livro in livros %}
+    <div>
+        <p>ID: {{ livro.id }}</p>
+        <p>ISBN: {{ livro.ISBN }}</p>
+        <h2>{{ livro.titulo }}</h2>
+        <p>Autor: {{ livro.autor }}</p>
+        <p>Editora: {{ livro.editora }}</p>
+        <p>Ano de Publicação: {{ livro.ano_publicacao }}</p>
+        <p>Categoria: {{ livro.categoria }}</p>
+        <p>Quantidade: {{ livro.quantidade }}</p>
+        <p>Preço: {{ livro.preco }}</p>
+        <p>Palavrinha: {{ livro.palavrinha }}</p>
+        <a href="{{ livro.imagem }}" target='_blank'>Ver Imagem</a>
+        <!-- Adicione aqui outros campos do BD conforme necessário -->
+        <br>
+    </div>
+    {% endfor %}
+
+    <br>
+    <button onclick="location.href='/principal'">Voltar</button>
+</body>
+</html>
+{% endblock %}

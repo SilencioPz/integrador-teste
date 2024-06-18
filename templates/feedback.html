@@ -1,0 +1,20 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Formulário de Feedback</h2>
+
+<form action="/feedback" method="post">
+<label for="feedback">Deixe seu feedback:</label><br>
+<textarea id="feedback" name="feedback" rows="4" cols="50"></textarea><br>
+<input type="submit" value="Enviar">
+</form> 
+<hr>
+    <h2>Início do Website</h2>
+    <button onclick="location.href='{{ url_for('login') }}'" type="button">Ir para Login</button></button>
+    <hr>
+</body>
+</html>
+{% endblock %}

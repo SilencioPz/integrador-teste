@@ -1,0 +1,156 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CRUD Livros</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            margin: 20px 0;
+            width: 100%;
+            max-width: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0 15px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"],
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover,
+        button:hover {
+            background-color: #45a049;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Inserção de Livros -->
+    <hr>
+    <h2>Cadastrar Livro</h2>
+    <form action="{{ url_for('crud_livros') }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="operation" value="create"><br>
+        <label for="createISBN">ISBN:</label><br>
+        <input type="text" id="createISBN" name="ISBN"><br>
+        <label for="createTitulo">Título:</label><br>
+        <input type="text" id="createTitulo" name="titulo"><br>
+        <label for="createAutor">Autor:</label><br>
+        <input type="text" id="createAutor" name="autor"><br>
+        <label for="createEditora">Editora:</label><br>
+        <input type="text" id="createEditora" name="editora"><br>
+        <label for="createAnoPublicacao">Ano de Publicação:</label><br>
+        <input type="text" id="createAnoPublicacao" name="ano_publicacao"><br>
+        <label for="createCategoria">Categoria:</label><br>
+        <input type="text" id="createCategoria" name="categoria"><br>
+        <label for="createQuantidade">Quantidade:</label><br>
+        <input type="text" id="createQuantidade" name="quantidade"><br>
+        <label for="createPreco">Preço:</label><br>
+        <input type="text" id="createPreco" name="preco" step="0.01" min="0" placeholder="0.00" required><br>
+        <label for="createImagem">Imagem:</label><br>
+        <input type="text" id="createImagem" name="imagem"><br>
+        <label for="createPalavrasChave">Palavras-chave:</label><br>
+        <input type="text" id="createPalavrasChave" name="palavrinha"><br>
+        <input type="submit" value="Criar">
+    </form>
+    <hr>
+    <!-- Pesquisa de Livros -->
+    <h2>Pesquisar Livros</h2>
+    <form action="{{ url_for('crud_livros') }}" method="post">
+        <input type="hidden" name="operation" value="read"><br>
+        <input type="submit" value="Ver">
+    </form>
+    <hr>
+    <!-- Exibição de Livros -->
+    {% for livro in livros %}
+        <div>
+            <h3>{{ livro.titulo }}</h3>
+            <p>{{ livro.autor }}</p>
+            <img src="{{ livro.imagem }}" alt="{{ livro.titulo }}">
+        </div>
+    {% endfor %}
+    <!-- Atualização de Livros -->
+    <h2>Atualizar Livro</h2>
+    <form action="{{ url_for('crud_livros') }}" method="post" enctype="multipart/form-data">
+        <input type="hidden" name="operation" value="update">
+        <label for="updateId">ID do Livro:</label><br>
+        <input type="text" id="updateId" name="id"><br>
+        <label for="updateISBN">ISBN:</label><br>
+        <input type="text" id="updateISBN" name="ISBN"><br>
+        <label for="updateTitulo">Título:</label><br>
+        <input type="text" id="updateTitulo" name="titulo"><br>
+        <label for="updateAutor">Autor:</label><br>
+        <input type="text" id="updateAutor" name="autor"><br>
+        <label for="updateEditora">Editora:</label><br>
+        <input type="text" id="updateEditora" name="editora"><br>
+        <label for="updateAnoPublicacao">Ano de Publicação:</label><br>
+        <input type="text" id="updateAnoPublicacao" name="ano_publicacao"><br>
+        <label for="updateCategoria">Categoria:</label><br>
+        <input type="text" id="updateCategoria" name="categoria"><br>
+        <label for="updateQuantidade">Quantidade:</label><br>
+        <input type="text" id="updateQuantidade" name="quantidade"><br>
+        <label for="updatePreco">Preço:</label><br>
+        <input type="text" id="updatePreco" name="preco" step="0.01" min="0" placeholder="0.00" required><br>
+        <label for="updateImagem">Imagem:</label><br>
+        <input type="text" id="updateImagem" name="imagem"><br>
+        <label for="updatePalavrasChave">Palavras-chave:</label><br>
+        <input type="text" id="updatePalavrasChave" name="palavrinha"><br>
+        <input type="submit" value="Atualizar">
+    </form>
+    <hr>
+    <!--Deleção de Livros-->
+    <h2>Deletar Livro</h2>
+    <form action="{{ url_for('crud_livros') }}" method="post">
+        <input type="hidden" name="operation" value="delete"><br>
+        <label for="deleteId">ID do Livro:</label><br>
+        <input type="text" id="deleteId" name="id"><br>
+        <input type="submit" value="Deletar">
+    </form>
+    <hr>
+    <h2>Redirecionamento</h2>
+    <button onclick="location.href='{{ url_for('crud_login') }}'" type="button">Ir para CRUD Login</button>
+<hr>
+<button onclick="location.href='{{ url_for('login') }}'" type="button">Ir para Login</button>
+<hr>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+<script src="{{ url_for('static', filename='js/query.js') }}" defer></script>
+</body>
+
+</html>
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+{% block conteudo %}
+{% include 'navbar.html' %}
+<link rel="stylesheet" href="{{ url_for('static', filename='autenticar.css') }}">
+<h1>Faça seu login:</h1>
+
+<form method="POST" action="{{ url_for('autenticar')}}">
+    {{ form.csrf_token }}
+    <input type="hidden" name="proxima" value="{{ proxima or url_for('principal')}}">
+    <p><label>E-mail:</label><input class="form-control" type="email" name="email" required></p>
+    <p><label>Senha:</label><input class="form-control" type="password" name="senha" required></p>
+    <p><button class="btn btn-primary" type="submit">Entrar</button></p>
+</form>
+
+<img src="{{ url_for('static', filename='logo-quie-isso-att-3.png') }}" alt="Quie Isso Livros">
+{% endblock %}

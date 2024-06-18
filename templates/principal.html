@@ -1,0 +1,227 @@
+{% extends "template.html" %}
+{% block conteudo %}
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quie Isso Livros</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='principal.css') }}">
+</head>
+
+<body class="meuBody">
+
+    <form action="{{ url_for('logout') }}" method="post" style="text-align: center;">
+        <button type="submit" id="botaoLogout">Logout</button>
+    </form>
+
+    <h5 id="dataHora"></h5>
+    <button id="increase">Zoom+</button>
+    <button id="decrease">Zoom-</button>
+    <div class="text-center text-md-start text-lg-end">
+        <div class="header">
+        </div>
+
+
+        <div id="content">
+            <!--Adiciona Zoom mais/Zoom menos-->
+            <script>
+                document.getElementById('increase').addEventListener('click', function () {
+                    var body = document.body;
+                    var currentSize = parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'));
+                    body.style.fontSize = (currentSize + 1) + 'px';
+                });
+
+                document.getElementById('decrease').addEventListener('click', function () {
+                    var body = document.body;
+                    var currentSize = parseFloat(window.getComputedStyle(body, null).getPropertyValue('font-size'));
+                    if (currentSize > 1) {
+                        body.style.fontSize = (currentSize - 1) + 'px';
+                    }
+                });
+
+            </script>
+        </div>
+
+        <header>
+
+            <form action="{{ url_for('pesquisar') }}" method="get" id="cacamba" style="width: 100%; display: flex; justify-content: center; align-items: center;">
+                <input type="text" name="pesquisa" id="pesquisa" placeholder="Digite para pesquisar..." style="flex-grow: 1; margin-right: 10px;">
+                <button type="submit" id="botaoPesquisa">Pesquisar</button>
+            </form>
+            
+            <img class="logo" style="width: 50%; display: block; margin: 20px auto;" id="logo" src="{{ url_for('static', filename='logo-quie-isso-att-3.png') }}" alt="Logo do site" data-nome="logo-quie-isso"
+                data-descricao="quie isso livros logo site">
+            <hr>
+            <br>
+            <h1 style="text-align: center;">Um sebo pra lá de diferente! :D</h1>
+            <br>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="#aventura">Aventura</a></li>
+                <li><a href="#romance">Romance</a></li>
+                <li><a href="#comedia">Comédia</a></li>
+                <li><a href="#ficcao">Ficção</a></li>
+                <li><a href="#literatura_estrangeira">Livros Estrangeiros</a></li>
+                <li><a href="#poesia">Poesia</a></li>
+            </ul>
+        </nav>
+        
+        <hr>
+
+        <main>
+            
+            <section aria-label="Programação">
+                <h1>Livros de Programação:</h1>
+                <div class="carrossel">
+                    <button id="anterior" class="carrossel-botao">↞</button>
+                    
+                    <!-- Início do Formulário -->
+                    <form action="{{ url_for('confirmar') }}" method="POST" enctype="multipart/form-data">
+                        {{ form.csrf_token }}
+                        {% for livro in livros %}
+                            <input type="hidden" name="livro_id" value="{{ livro.id }}">
+                            {% if livro.imagem %}
+                                <img src="{{ url_for('static', filename='fotografias/' ~ livro.imagem) }}" alt="{{ livro.titulo }}">
+                            {% else %}
+                                <img src="{{ url_for('static', filename='livro.png') }}" alt="Sem imagem">
+                            {% endif %}
+                            <p>{{ livro.titulo }}</p>
+                        {% endfor %}
+                        <input type="submit" value="Confirmar">
+                    </form>
+                    <!-- Fim do Formulário -->
+                    
+                    <button id="proximo" class="carrossel-botao">↠</button>
+                </div>
+            </section>
+            
+            <div id="tendencias">
+                <h1>Tendências:</h1>
+                <hr>
+                <h5><a href="https://www.amazon.com.br">Amazon</a></h5>
+                <h5><a href="https://www.submarino.com.br/">Submarino</a></h5>
+                <h5><a href="https://www.pontofrio.com.br/c/livros?filtro=categoria%5Ed:c484">Ponto</a></h5>
+                <h5><a href="https://www.americanas.com.br/categoria/livros">Americanas</a></h5>
+                <h5><a href="https://www.estantevirtual.com.br/">Estante Virtual</a></h5>
+                <hr>
+            </div>
+            
+            <hr>
+
+            <section id="aventura">
+                <h1>Livros de Aventura:</h1>
+                <br>
+                <div class="carrossel-1">
+                    <button id="anterior1" class="carrossel-botao1">↞</button>
+                    <button id="proximo1" class="carrossel-botao1">↠</button>
+                    
+                    
+
+                </div>
+            </section>
+
+            <hr>
+
+            <section id="romance">
+                <h1>Livros de Romance:</h1>
+                <br>
+                <div class="carrossel-2">
+                    <button id="anterior2" class="carrossel-botao2">↞</button>
+                    <button id="proximo2" class="carrossel-botao2">↠</button>
+                
+
+
+                </div>
+            </section>
+            
+            <hr>
+
+            <section id="comedia">
+                <h1>Livros de Comédia:</h1>
+                <br>
+                <div class="carrossel-3">
+                    <button id="anterior3" class="carrossel-botao3">↞</button>
+                    <button id="proximo3" class="carrossel-botao3">↠</button>
+                    
+                    
+
+                </div>
+            </section>
+            
+            <hr>
+
+            <section id="ficcao">
+                <h1>Livros de Ficção:</h1>
+                <br>
+                <div class="carrossel-4">
+                    <button id="anterior4" class="carrossel-botao4">↞</button>
+                    <button id="proximo4" class="carrossel-botao4">↠</button>
+                    
+
+
+                </div>
+            </section>
+            
+            <hr>
+
+            <section id="literatura_estrangeira">
+                <h1>Livros de Literatura Estrangeira:</h1>
+                <br>
+                <div class="carrossel-5">
+                    <button id="anterior5" class="carrossel-botao5">↞</button>
+                    <button id="proximo5" class="carrossel-botao5">↠</button>
+                    
+
+
+                </div>
+            </section>
+            
+            <hr>
+
+            <section id="poesia">
+                <h1>Livros de Poesia:</h1>
+                <br>
+                <div class="carrossel-6">
+                    <button id="anterior6" class="carrossel-botao6">↞</button>
+                    <button id="proximo6" class="carrossel-botao6">↠</button>
+                    
+                    
+
+                </div>
+            </section>
+            <hr>
+            <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfoTTF0Q2kYnIsFttSep0n_0tB76vjggA8fONadYWAO_3FzyA/viewform?embedded=true" width="640" height="1333" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+            <hr>
+            <a href="/feedback" class="feedback-button">
+                Deixe seu feedback
+            
+            <hr>
+
+        </main>
+
+        <footer style="text-align: center;">
+            <h3>Sobre o autor deste site:
+                <a href="https://github.com/silenciopz">silenciopz</a>
+            </h3>
+            <br>
+            <br>
+            <h3>Copyright © 2024 silenciopz, todos os direitos reservados. Site hosteado por: <a
+                    href="https://www.netlify.com/">Netlify</a></h3>
+            <br>
+        </footer>
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Topo</button>
+
+        <script src="{{ url_for('static', filename='js/principal.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/carrossel.js') }}"></script>
+        <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+        <script src="{{ url_for('static', filename='js/query.js') }}" defer></script>
+    </div>
+</body>
+
+</html>
+{% endblock %}
